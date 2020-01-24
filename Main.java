@@ -10,7 +10,7 @@ public class Main {
 	private static void Run() {
 		// dummy data to start
 		Song mySong1 = new Song("Do you", "Troyboi");
-		Song mySong2 = new Song("Bleach", "Brockhamton");
+		Song mySong2 = new Song("Bleach", "Brockhampton");
 		Song mySong3 = new Song("Pink + White", "Frank Ocean");
 		
 		ArrayList<Playlist> allList = new ArrayList<>();
@@ -23,52 +23,38 @@ public class Main {
 		defaultlist.addSong(mySong2);
 		defaultlist.addSong(mySong3);
 
-		for(int i = 0; i < defaultlist.getSize(); i++) {
-			defaultlist.getSong(i).printSong();
-		}
+		// function to print songs in the defaultlist
+//		for(int i = 0; i < defaultlist.getSize(); i++) {
+//			defaultlist.getSong(i).printSong();
+//		}
 		
-		// prompt user to add a song
-		System.out.println("Welcome to the program!\n"
-				+ "What do you want to do?\n"
-				+ "Add a playlist:		p <playlist_name>\n"
-				+ "Add a song: 		s <song_name> <artist_name> <playlist_name>\n"
-				+ "Delete a song:		d <song_name> <artist_name>\n"
-				+ "* <playlist_name>s in 's' and 'd' are optional, if there's no playlist specified, changes will be applied to default playlist");
+		promptUser();
 		Scanner scan = new Scanner(System.in);
 		String userChoice = scan.next();
 		String songName;
 		String artist;
 		String theList;
 		int index;
-		String targetList;
 		Song song;
 		
-		
+		// TODO: We can add feature that keeps asking user to input until user choose to quit the program
 		switch(userChoice) {
 		case "p":
 			String playlistName = scan.next();
 			ArrayList<Song> list = new ArrayList<>();
 			Playlist playlist = new Playlist(list, playlistName);
+			allList.add(playlist);
 			break;
 		case "s":
 			songName = scan.next();
 			artist = scan.next();
-			System.out.println(scan.hasNext());
-			// TODO: system doesn't stop with no playlist input during s and d
-			if(scan.hasNext() == true)
-			{
-				theList = scan.next();
-				targetList = theList;
-			}
-			else {
-				targetList = "defaultlist";
-			}
-			System.out.println(songName + " " + artist + " " + targetList);
-			song = new Song(songName, artist);
+			theList = scan.next();
+			System.out.println(songName + " " + artist + " " + theList);
+			song = new Song(songName, artist); 
 			
-			index = searchList(targetList, allList);
+			index = searchList(theList, allList);
 			if(index == -1) {
-				System.out.println("There's no playlist called '" + targetList + "', please double check\n");
+				System.out.println("There's no playlist called '" + theList + "', please double check\n");
 			}
 			else {
 				allList.get(index).addSong(song);
@@ -80,23 +66,16 @@ public class Main {
 			theList = scan.next();
 			song = new Song(songName, artist);
 			
-			if(scan.hasNext() == true)
-			{
-				theList = scan.next();
-				targetList = theList;
-			}
-			else {
-				targetList = "defaultlist";
-			}
-			
-			index = searchList(targetList, allList);
+			index = searchList(theList, allList);
 			if(index == -1) {
-				System.out.println("There's no playlist called '" + targetList + "' , please double check\n");
+				System.out.println("There's no playlist called '" + theList + "' , please double check\n");
 			}
 			else {
 				allList.get(index).deleteSong(song);
 				allList.get(index).printList();
 			}
+		case "q":
+			System.out.println("Thank you for using the program!");
 		}
 		
 	}	
@@ -110,6 +89,16 @@ public class Main {
 			}
 		}
 		return result;
+	}
+	
+	public static void promptUser() {
+		// prompt user to add a song
+		System.out.println("Welcome to the program!\n"
+				+ "What do you want to do?\n"
+				+ "Add a playlist:		p <playlist_name>\n"
+				+ "Add a song: 		s <song_name> <artist_name> <playlist_name>\n"
+				+ "Delete a song:		d <song_name> <artist_name> <playlist_name>\n"
+				+ "Quit the program:	q\n");
 	}
 }
 
