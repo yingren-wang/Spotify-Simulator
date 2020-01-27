@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.List;
 import java.util.Random;
 
 public class Main {
@@ -9,9 +11,9 @@ public class Main {
 
     private static void Run() {
         // dummy data to start
-        Song mySong1 = new Song("Do_you", "Troyboi");
+        Song mySong1 = new Song("DoYou", "Troyboi");
         Song mySong2 = new Song("Bleach", "Brockhampton");
-        Song mySong3 = new Song("Pink_+_White", "Frank_Ocean");
+        Song mySong3 = new Song("Pink+White", "FrankOcean");
 
         ArrayList<Playlist> allList = new ArrayList<>();
 
@@ -23,11 +25,6 @@ public class Main {
         defaultlist.addSong(mySong2);
         defaultlist.addSong(mySong3);
 
-        // function to print songs in the defaultlist
-//		for(int i = 0; i < defaultlist.getSize(); i++) {
-//			defaultlist.getSong(i).printSong();
-//		}
-
         promptUser();
         Scanner scan = new Scanner(System.in);
         String userChoice = scan.next();
@@ -36,12 +33,7 @@ public class Main {
         String theList;
         int index;
         Song song;
-        Song currentSong = mySong1;
-        String currentPlaylist = "defaultlist";
 
-
-
-        // TODO: We can add feature that keeps asking user to input until user choose to quit the program
         while (userChoice != "q") {
             switch (userChoice) {
                 case "p":
@@ -50,13 +42,11 @@ public class Main {
                     Playlist playlist = new Playlist(list, playlistName);
                     allList.add(playlist);
                     System.out.println("Your new playlist is called " + playlistName);
-
                     break;
                 case "r":
                     System.out.println("Enter the name of the playlist you would like to randomize");
                     String userPlaylist = scan.next();
-
-
+                    
                     index = searchList(userPlaylist, allList);
                     if (index == -1)
                     {
@@ -114,9 +104,7 @@ public class Main {
                     break;
                 case "q":
                     System.out.println("Thank you for using the program!");
-
             }
-
             userChoice = scan.next();
         }
     }
@@ -140,7 +128,7 @@ public class Main {
                 + "Add a playlist:		p <playlist_name>\n"
                 + "Add a song: 		s <song_name> <artist_name> <playlist_name>\n"
                 + "Delete a song:		d <song_name> <artist_name> <playlist_name>\n"
-                + "Randomize songs:    r \n"
+                + "Randomize songs:    	r \n"
                 + "Quit the program:	q\n");
     }
 }
@@ -148,7 +136,6 @@ public class Main {
 class Song {
     String sName;
     String sArtist;
-
 
     // get functions for private members
     public String getName() {
@@ -187,14 +174,14 @@ class Playlist {
         size = playlist.size();
     }
     public void deleteSong(Song song) {
-        for(int i = 0; i < size; i++) {
-            Song search = playlist.get(i);
-            if(search.getName().equals(song.getName()) && search.getArtist().equals(song.getArtist())) {
-                // found the song to delete
-                playlist.remove(i);
-                size = playlist.size();
-            }
-        }
+	    for(int i = 0; i < size; i++) {
+	        Song search = playlist.get(i);
+	        if(search.getName().equals(song.getName()) && search.getArtist().equals(song.getArtist())) {
+	            // found the song to delete
+	            playlist.remove(i);
+	            size = playlist.size();
+	        }
+	    }
     }
     public Song getSong(int i) {
         return playlist.get(i);
