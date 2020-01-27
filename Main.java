@@ -138,7 +138,7 @@ public class Main {
     }
 
     // search a list in all lists
-    public static int searchList(String list, ArrayList<Playlist> alllist) {
+    private static int searchList(String list, ArrayList<Playlist> alllist) {
         int result = -1;
         for(int i = 0; i < alllist.size(); i++) {
             if(alllist.get(i).getListName().equals(list)) {
@@ -148,7 +148,7 @@ public class Main {
         return result;
     }
 
-    public static void promptUser() {
+    private static void promptUser() {
         // prompt user to add a song
         System.out.println("Welcome to the program!\n"
                 + "Now Playing " 
