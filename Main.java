@@ -42,11 +42,12 @@ public class Main {
                     Playlist playlist = new Playlist(list, playlistName);
                     allList.add(playlist);
                     System.out.println("Your new playlist is called " + playlistName);
+                    System.out.println("What do you want to do?");
                     break;
+                    
                 case "r":
                     System.out.println("Enter the name of the playlist you would like to randomize");
                     String userPlaylist = scan.next();
-                    
                     index = searchList(userPlaylist, allList);
                     if (index == -1)
                     {
@@ -65,10 +66,10 @@ public class Main {
                                 tempList.set(i, temp);
 
                             }
-                            // Collections.shuffle(Arrays.asList(allList.get(index).getPlaylist()), new Random());
                     }
                     System.out.println("Your new playlist order is: " );
                     allList.get(index).printList();
+                    System.out.println("What do you want to do?");
                     break;
 
                 case "s":
@@ -85,6 +86,7 @@ public class Main {
                         allList.get(index).addSong(song);
                         allList.get(index).printList();
                     }
+                    System.out.println("What do you want to do?");
                     break;
 
                 case "d":
@@ -101,7 +103,33 @@ public class Main {
                         allList.get(index).printList();
                         System.out.println("Song deleted");
                     }
+                    System.out.println("What do you want to do?");
                     break;
+                    
+                case "n":
+                {
+                    System.out.println("Enter the name of the playlist you're in");
+                    String userPlaylistName = scan.next();
+
+
+                    index = searchList(userPlaylistName, allList);
+                    if (index == -1)
+                    {
+                        System.out.println("There's no playlist called '" + userPlaylistName + "', please double check\n");
+                    }
+                    else
+                    {
+                        int i = 0;
+                        Playlist presentPlaylist =  allList.get(index);
+                        Song presentSong = presentPlaylist.getSong( i + 1);
+
+                        System.out.println("Now playing " + presentSong.getName()+ " by "+presentSong.getArtist());
+                        System.out.println("Successfully skipped!!\n\n");
+                    }
+                }
+                System.out.println("What do you want to do?");
+                break;
+                    
                 case "q":
                     System.out.println("Thank you for using the program!");
             }
@@ -123,13 +151,14 @@ public class Main {
     public static void promptUser() {
         // prompt user to add a song
         System.out.println("Welcome to the program!\n"
-                +"Now Playing " 
+                + "Now Playing " 
                 + "What do you want to do?\n"
-                + "Add a playlist:		p <playlist_name>\n"
-                + "Add a song: 		s <song_name> <artist_name> <playlist_name>\n"
-                + "Delete a song:		d <song_name> <artist_name> <playlist_name>\n"
-                + "Randomize songs:    	r \n"
-                + "Quit the program:	q\n");
+                + "Add a playlist:			p <playlist_name>\n"
+                + "Add a song: 			s <song_name> <artist_name> <playlist_name>\n"
+                + "Delete a song:			d <song_name> <artist_name> <playlist_name>\n"
+                + "Randomize songs:    		r \n"
+                + "Skip to the next song:   	n \n"
+                + "Quit the program:		q\n");
     }
 }
 
@@ -205,3 +234,4 @@ class Playlist {
         }
     }
 }
+
