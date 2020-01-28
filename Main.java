@@ -42,7 +42,7 @@ public class Main {
                     Playlist playlist = new Playlist(list, playlistName);
                     allList.add(playlist);
                     System.out.println("Your new playlist is called " + playlistName);
-                    System.out.println("What do you want to do?");
+                    System.out.println("\nWhat do you want to do?");
                     break;
                     
                 case "r":
@@ -69,7 +69,7 @@ public class Main {
                     }
                     System.out.println("Your new playlist order is: " );
                     allList.get(index).printList();
-                    System.out.println("What do you want to do?");
+                    System.out.println("\nWhat do you want to do?");
                     break;
 
                 case "s":
@@ -86,7 +86,7 @@ public class Main {
                         allList.get(index).addSong(song);
                         allList.get(index).printList();
                     }
-                    System.out.println("What do you want to do?");
+                    System.out.println("\nWhat do you want to do?");
                     break;
                     
                 case "t":
@@ -104,8 +104,9 @@ public class Main {
                     {
                         System.out.println("Playlist named '" +playlistName+ "' deleted");
                         allList.remove(index);
-
                     }
+                    System.out.println("\nWhat do you want to do?");
+                    break;
 
                 case "d":
                     songName = scan.next();
@@ -121,7 +122,7 @@ public class Main {
                         allList.get(index).printList();
                         System.out.println("Song deleted");
                     }
-                    System.out.println("What do you want to do?");
+                    System.out.println("\nWhat do you want to do?");
                     break;
                     
                 case "n":
@@ -145,7 +146,7 @@ public class Main {
                         System.out.println("Successfully skipped!!\n\n");
                     }
                 }
-                System.out.println("What do you want to do?");
+                System.out.println("\nWhat do you want to do?");
                 break;
                     
                 case "q":
@@ -176,6 +177,7 @@ public class Main {
                 + "Delete a song:			d <song_name> <artist_name> <playlist_name>\n"
                 + "Randomize songs:    		r \n"
                 + "Skip to the next song:   	n \n"
+                + "Delete a playlist		t <playlist_name>\n"
                 + "Quit the program:		q\n");
     }
 }
