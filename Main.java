@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 import java.util.Random;
+import java.lang.management.PlatformLoggingMXBean;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,6 +21,7 @@ public class Main {
         ArrayList<Song> dList = new ArrayList<>();
         Playlist defaultlist = new Playlist(dList, "defaultlist");
         allList.add(defaultlist);
+        
 
         defaultlist.addSong(mySong1);
         defaultlist.addSong(mySong2);
@@ -33,6 +35,8 @@ public class Main {
         String theList;
         int index;
         Song song;
+        Playlist currentList = allList.get(0);
+        Song currentSong = currentList.getSong(0);
 
         while (userChoice != "q") {
             switch (userChoice) {
@@ -131,19 +135,60 @@ public class Main {
                     String userPlaylistName = scan.next();
 
 
-                    index = searchList(userPlaylistName, allList);
-                    if (index == -1)
+
+                    int indexList = searchList(userPlaylistName, allList);
+                    if (indexList == -1)
                     {
                         System.out.println("There's no playlist called '" + userPlaylistName + "', please double check\n");
                     }
-                    else
-                    {
-                        int i = 0;
-                        Playlist presentPlaylist =  allList.get(index);
-                        Song presentSong = presentPlaylist.getSong( i + 1);
+                    else{
+                    Playlist presentPlaylist = allList.get(indexList);
 
-                        System.out.println("Now playing " + presentSong.getName()+ " by "+presentSong.getArtist());
-                        System.out.println("Successfully skipped!!\n\n");
+                    if (currentList.getListName()== presentPlaylist.getListName()) {
+
+                        int currentIndex = presentPlaylist.searchSong(currentSong);
+                        currentSong= presentPlaylist.getSong(currentIndex + 1);
+                    }
+                    else {
+
+                        currentSong = presentPlaylist.getSong(0);
+                        currentList = presentPlaylist;
+                    }
+
+                    System.out.println("Now playing " + currentSong.getName()+ " by "+currentSong.getArtist());
+                    System.out.println("Successfully skipped!!\n\n");
+                    }
+                }
+                System.out.println("What do you want to do?");
+                break;
+
+                case "pl":
+                {
+                    System.out.println("Enter the name of the playlist you're in");
+                    String userPlaylistName = scan.next();
+
+
+                    index = searchList(userPlaylistName, allList);
+                    if (index == -1) {
+                        System.out.println("There's no playlist called '" + userPlaylistName + "', please double check\n");
+                    }
+
+                    else {
+                        Playlist presentPlaylist = allList.get(index);
+
+                        System.out.println("What song would you like to play?");
+                        String userSong = scan.next();
+
+                        //search for song
+                        for (int i = 0; i < presentPlaylist.getSize();i++){
+                            if(userSong.equals(presentPlaylist.getSong(i).getName())){
+
+                                Song newSong = presentPlaylist.getSong(i);
+
+                                System.out.println("Now playing " + newSong.getName()+ " by " + newSong.getArtist());
+                            }
+                        }
+
                     }
                 }
                 System.out.println("\nWhat do you want to do?");
@@ -170,9 +215,9 @@ public class Main {
     private static void promptUser() {
         // prompt user to add a song
         System.out.println("Welcome to the program!\n"
-                + "Now Playing " 
                 + "What do you want to do?\n"
                 + "Add a playlist:			p <playlist_name>\n"
+                + "Play a song:			pl\n"
                 + "Add a song: 			s <song_name> <artist_name> <playlist_name>\n"
                 + "Delete a song:			d <song_name> <artist_name> <playlist_name>\n"
                 + "Randomize songs:    		r \n"
@@ -221,6 +266,12 @@ class Playlist {
     public void addSong(Song song) {
         playlist.add(song);
         size = playlist.size();
+    }
+    //search for a song
+    public int searchSong(Song song) {
+        int result;
+        result = playlist.indexOf(song);
+        return result;
     }
     public void deleteSong(Song song) {
 	    for(int i = 0; i < size; i++) {
