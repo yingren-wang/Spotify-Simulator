@@ -1,5 +1,3 @@
-package com.company;
-import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
@@ -20,12 +18,13 @@ public class Main {
         ArrayList<Playlist> allList = new ArrayList<>();
 
         ArrayList<Song> dList = new ArrayList<>();
-        Playlist defaultList = new Playlist(dList, "defaultList");
-        allList.add(defaultList);
+        Playlist defaultlist = new Playlist(dList, "defaultlist");
+        allList.add(defaultlist);
+        
 
-        defaultList.addSong(mySong1);
-        defaultList.addSong(mySong2);
-        defaultList.addSong(mySong3);
+        defaultlist.addSong(mySong1);
+        defaultlist.addSong(mySong2);
+        defaultlist.addSong(mySong3);
 
         promptUser();
         Scanner scan = new Scanner(System.in);
@@ -48,7 +47,7 @@ public class Main {
                     System.out.println("Your new playlist is called " + playlistName);
                     System.out.println("What do you want to do?");
                     break;
-
+                    
                 case "r":
                     System.out.println("Enter the name of the playlist you would like to randomize");
                     String userPlaylist = scan.next();
@@ -58,18 +57,18 @@ public class Main {
                         System.out.println("There's no playlist called '" + userPlaylist + "', please double check\n");
                     }
                     else
-                    {
-                        List<Song> tempList = allList.get(index).getPlaylist();
-                        Random rand = new Random();
-
-                        for (int i = 0; i < tempList.size(); i++)
                         {
-                            int randomIndexToSwap = rand.nextInt(tempList.size());
-                            Song temp = Song.copySong(tempList.get(randomIndexToSwap));
-                            tempList.set(randomIndexToSwap, Song.copySong(tempList.get(i)));
-                            tempList.set(i, temp);
+                            List<Song> tempList = allList.get(index).getPlaylist();
+                            Random rand = new Random();
 
-                        }
+                            for (int i = 0; i < tempList.size(); i++)
+                            {
+                                int randomIndexToSwap = rand.nextInt(tempList.size());
+                                Song temp = Song.copySong(tempList.get(randomIndexToSwap));
+                                tempList.set(randomIndexToSwap, Song.copySong(tempList.get(i)));
+                                tempList.set(i, temp);
+
+                            }
                     }
                     System.out.println("Your new playlist order is: " );
                     allList.get(index).printList();
@@ -109,7 +108,7 @@ public class Main {
                     }
                     System.out.println("What do you want to do?");
                     break;
-
+                    
                 case "n":
                 {
                     System.out.println("Enter the name of the playlist you're in");
@@ -174,7 +173,7 @@ public class Main {
                 }
                 System.out.println("What do you want to do?");
                 break;
-
+                    
                 case "q":
                     System.out.println("Thank you for using the program!");
             }
@@ -193,19 +192,17 @@ public class Main {
         return result;
     }
 
-
     private static void promptUser() {
         // prompt user to add a song
         System.out.println("Welcome to the program!\n"
-                + "Now Playing "
                 + "What do you want to do?\n"
-                + "Add a playlist:			    p <playlist_name>\n"
-                + "Add a song: 			        s <song_name> <artist_name> <playlist_name>\n"
-                + "Play a song                  pl\n"
-                + "Delete a song:			    d <song_name> <artist_name> <playlist_name>\n"
-                + "Randomize songs:    		    r \n"
-                + "Skip to the next song:       n \n"
-                + "Quit the program:		    q\n");
+                + "Add a playlist:			p <playlist_name>\n"
+                + "Play a song:			pl\n"
+                + "Add a song: 			s <song_name> <artist_name> <playlist_name>\n"
+                + "Delete a song:			d <song_name> <artist_name> <playlist_name>\n"
+                + "Randomize songs:    		r \n"
+                + "Skip to the next song:   	n \n"
+                + "Quit the program:		q\n");
     }
 }
 
@@ -238,7 +235,7 @@ class Song {
 }
 
 class Playlist {
-    private ArrayList<Song> playlist;
+    private ArrayList<Song> playlist = new ArrayList<Song>();
     private Integer size;
     private String pName;
 
@@ -249,25 +246,22 @@ class Playlist {
         playlist.add(song);
         size = playlist.size();
     }
-
     //search for a song
     public int searchSong(Song song) {
         int result;
         result = playlist.indexOf(song);
         return result;
     }
-
     public void deleteSong(Song song) {
-        for(int i = 0; i < size; i++) {
-            Song search = playlist.get(i);
-            if(search.getName().equals(song.getName()) && search.getArtist().equals(song.getArtist())) {
-                // found the song to delete
-                playlist.remove(i);
-                size = playlist.size();
-            }
-        }
+	    for(int i = 0; i < size; i++) {
+	        Song search = playlist.get(i);
+	        if(search.getName().equals(song.getName()) && search.getArtist().equals(song.getArtist())) {
+	            // found the song to delete
+	            playlist.remove(i);
+	            size = playlist.size();
+	        }
+	    }
     }
-
     public Song getSong(int i) {
         return playlist.get(i);
     }
@@ -275,7 +269,6 @@ class Playlist {
         this.playlist = list;
         this.pName = listName;
     }
-
     public Integer getSize() {
         return size;
     }
@@ -291,3 +284,4 @@ class Playlist {
         }
     }
 }
+
